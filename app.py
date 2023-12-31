@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for, json
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -7,6 +7,13 @@ app = Flask(__name__)
 db_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'logs.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 db = SQLAlchemy(app)
+
+import pickle
+import pandas as pd
+
+with open('regionwise_columns.pickle', 'rb') as f:
+    sensor_data = pickle.load(f)
+
 
 class Log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -19,7 +26,7 @@ class Log(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html',signals_data=sensor_data)
 
 @app.route('/add_log', methods=['POST'])
 def add_log():

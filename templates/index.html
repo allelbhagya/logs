@@ -14,31 +14,58 @@
             <li><a href="/logs/cobbles">Cobble Log</a></li>
         </ul>
     </nav>
-    <div class="container">    <h2>Create a New Log</h2>
-    <form action="/add_log" method="post">
-        <label for="log_type">Log Type:</label>
-        <select name="log_type">
-            <option value="anomalies">Anomaly</option>
-            <option value="cobbles">Cobble</option>
-        </select><br>
+    <div class="container">    
+        <h2>Create a New Log</h2>
+        <form action="/add_log" method="post">
+            <label for="log_type">Log Type:</label>
+            <select name="log_type">
+                <option value="anomalies">Anomaly</option>
+                <option value="cobbles">Cobble</option>
+            </select><br>
 
-        <label for="log_details">Log Details:</label>
-        <input type="text" name="log_details" required><br>
+            <label for="log_details">Log Details:</label>
+            <input type="text" name="log_details" required><br>
 
-        <label for="datetime">Date-Time Period:</label>
-        <input type="datetime-local" name="datetime" required><br>
+            <label for="datetime">Date-Time Period:</label>
+            <input type="datetime-local" name="datetime" required><br>
 
-        <label for="signals">Signals Involved:</label>
-        <input type="text" name="signals" required><br>
+            <label for="affected_region">Affected Region:</label>
+            <select name="affected_region" id="regionSelect" onchange="updateSignals()">
+                {% for region in signals_data.keys() %}
+                    <option value="{{ region }}">{{ region }}</option>
+                {% endfor %}
+            </select><br>
 
-        <label for="affected_region">Affected Region:</label>
-        <input type="text" name="affected_region" required><br>
+            <label for="signals">Signals Involved:</label>
+            <select name="signals" id="signalSelect">
+                <!-- Signal options will be populated dynamically -->
+            </select><br>
 
-        <label for="correctness_measures">Correctness Measures Taken:</label>
-        <input type="text" name="correctness_measures" required><br>
+            <label for="correctness_measures">Correctness Measures Taken:</label>
+            <input type="text" name="correctness_measures" required><br>
 
-        <input type="submit" value="Submit">
-    </form></div>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 
+    <script>
+        
+        function updateSignals() {
+            var regionSelect = document.getElementById('regionSelect');
+            var signalSelect = document.getElementById('signalSelect');
+            var selectedRegion = regionSelect.options[regionSelect.selectedIndex].value;
+            var signals = signalsData[selectedRegion] || [];
+    
+            signalSelect.innerHTML = '';
+    
+            signals.forEach(function(signal) {
+                var option = document.createElement('option');
+                option.value = signal;
+                option.text = signal;
+                signalSelect.add(option);
+            });
+        }
+        updateSignals();
+    </script>    
 </body>
 </html>
