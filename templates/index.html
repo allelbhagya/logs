@@ -49,15 +49,21 @@
     </div>
 
     <script>
-        
+        // Set signalsData as a global variable
+        var signalsData = {{ signals_data | tojson | safe | replace("'", "\'") | replace('"', '\"') | safe }};
+
         function updateSignals() {
             var regionSelect = document.getElementById('regionSelect');
             var signalSelect = document.getElementById('signalSelect');
             var selectedRegion = regionSelect.options[regionSelect.selectedIndex].value;
+
+            // Access signals data directly from the global variable
             var signals = signalsData[selectedRegion] || [];
-    
+
+            // Clear previous options
             signalSelect.innerHTML = '';
-    
+
+            // Populate new options
             signals.forEach(function(signal) {
                 var option = document.createElement('option');
                 option.value = signal;
@@ -65,7 +71,10 @@
                 signalSelect.add(option);
             });
         }
+
+        // Call updateSignals initially to populate the signals based on the default selected region
         updateSignals();
-    </script>    
+    </script>
+       
 </body>
 </html>
