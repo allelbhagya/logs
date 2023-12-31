@@ -15,10 +15,30 @@
         </ul>
     </nav>
     <h2>{% if log_type == 'anomalies' %}Anomalies{% else %}Cobbles{% endif %} Log</h2>
-    <ul>
-        {% for log in logs %}
-            <li>{{ log.details }} - {{ log.datetime }} <a href="/edit/{{ log_type }}/{{ log.id }}">Edit</a> | <a href="/delete/{{ log_type }}/{{ log.id }}">Delete</a></li>
-        {% endfor %}
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Log Details</th>
+                <th>Date-Time</th>
+                <th>Affected Region</th>
+                <th>Signals</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+                <tr>
+                    <td>{{ log.details }}</td>
+                    <td>{{ log.datetime }}</td>
+                    <td>{{ log.affected_region }}</td>
+                    <td>{{ log.signals }}</td>
+                    <td>
+                        <a href="/edit/{{ log_type }}/{{ log.id }}">Edit</a> |
+                        <a href="/delete/{{ log_type }}/{{ log.id }}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
