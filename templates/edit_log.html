@@ -5,93 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Log</title>
     <style>
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-}
-
-nav {
-    background-color: #001f3f;
-    color: #fff;
-    padding: 10px;
-    height: 100vh;
-    position: fixed;
-    right: 0; 
-    top: 0;
-    width: 220px;
-}
-
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-nav ul li {
-    margin-bottom: 10px;
-}
-
-nav a {
-    text-decoration: none;
-    color: #fff;
-    font-weight: bold;
-    display: block;
-    padding: 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-nav a:hover {
-    background-color: #003366;
-}
-
-.container {
-    margin-right: 270px;
-    margin-top: 50px; 
-}
-
-h2 {
-    margin-left: 100px;
-    color: #333;
-}
-
-form {
-    max-width: 400px;
-    margin: 50px auto; 
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-label {
-    display: block;
-    margin-bottom: 8px;
-}
-
-input, select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-input[type="submit"] {
-    background-color: #001f3f;
-    color: #fff;
-    cursor: pointer;
-}
-
-input[type="submit"]:hover {
-    background-color: #003366; 
-}
-
-
-    </style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav {
+            background-color: #001f3f;
+            color: #fff;
+            padding: 10px;
+            height: 100vh;
+            position: fixed;
+            right: 0; 
+            top: 0;
+            width: 220px;
+        }
+        
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav ul li {
+            margin-bottom: 10px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            display: block;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: #003366;
+        }
+        
+        .container {
+            margin-right: 270px;
+            margin-top: 50px; 
+        }
+        
+        h2 {
+            margin-left: 100px;
+            color: #333;
+        }
+        
+        form {
+            max-width: 400px;
+            margin: 50px auto; 
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        input[type="submit"] {
+            background-color: #001f3f;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #003366; 
+        }
+        
+        
+            </style>
 </head>
 <body>
     <nav>
@@ -109,16 +109,42 @@ input[type="submit"]:hover {
         <label for="datetime">Date-Time Period:</label>
         <input type="datetime-local" name="datetime" value="{{ log.datetime }}" required><br>
 
-        <label for="signals">Signals Involved:</label>
-        <input type="text" name="signals" value="{{ log.signals }}" required><br>
-
         <label for="affected_region">Affected Region:</label>
-        <input type="text" name="affected_region" value="{{ log.affected_region }}" required><br>
+        <select name="affected_region" id="regionSelect" onchange="updateSignals()">
+            <option value="" disabled>Select an affected region</option>
+            {% for region in signals_data.keys() %}
+                <option value="{{ region }}" {% if log.affected_region == region %}selected{% endif %}>{{ region }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="signals">Signals Involved:</label>
+        <select name="signals" id="signalSelect">
+            <option value="" disabled>Select signals involved</option>
+        </select><br>
 
         <label for="correctness_measures">Correctness Measures Taken:</label>
         <input type="text" name="correctness_measures" value="{{ log.correctness_measures }}" required><br>
 
         <input type="submit" value="Save Changes">
     </form>
+
+    <script>
+        var signalsData = {{ signals_data | tojson | safe }};
+
+        function updateSignals() {
+            var regionSelect = document.getElementById('regionSelect');
+            var signalSelect = document.getElementById('signalSelect');
+            var selectedRegion = regionSelect.options[regionSelect.selectedIndex].value;
+            var signals = signalsData[selectedRegion] || [];
+            signalSelect.innerHTML = '';
+            signals.forEach(function(signal) {
+                var option = document.createElement('option');
+                option.value = signal;
+                option.text = signal;
+                signalSelect.add(option);
+            });
+        }
+        updateSignals();
+    </script>
 </body>
 </html>

@@ -31,15 +31,18 @@
 
             <label for="affected_region">Affected Region:</label>
             <select name="affected_region" id="regionSelect" onchange="updateSignals()">
+                <option value="" disabled selected>Select an affected region</option>
                 {% for region in signals_data.keys() %}
                     <option value="{{ region }}">{{ region }}</option>
                 {% endfor %}
             </select><br>
-
+            
             <label for="signals">Signals Involved:</label>
             <select name="signals" id="signalSelect">
+                <option value="" disabled selected>Select signals involved</option>
                 <!-- Signal options will be populated dynamically -->
             </select><br>
+            
 
             <label for="correctness_measures">Correctness Measures Taken:</label>
             <input type="text" name="correctness_measures" required><br>

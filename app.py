@@ -65,7 +65,7 @@ def edit_log(log_type, id):
         db.session.commit()
         return redirect(url_for('logs', log_type=log_type))
 
-    return render_template('edit_log.html', log=log, log_type=log_type)
+    return render_template('edit_log.html', log=log, log_type=log_type, signals_data=sensor_data)
 
 @app.route('/delete/<log_type>/<int:id>')
 def delete_log(log_type, id):
