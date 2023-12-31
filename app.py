@@ -24,9 +24,14 @@ class Log(db.Model):
     affected_region = db.Column(db.String(255), nullable=False)
     correctness_measures = db.Column(db.String(255), nullable=False)
 
-@app.route('/')
+@app.route('/home')
 def index():
     return render_template('index.html',signals_data=sensor_data)
+
+@app.route('/')
+def auth():
+    return render_template('auth.html',signals_data=sensor_data)
+
 
 @app.route('/add_log', methods=['POST'])
 def add_log():
