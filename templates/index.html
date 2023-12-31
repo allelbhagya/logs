@@ -17,19 +17,19 @@
     <div class="container">    
         <h2>Log an Anomaly or Cobble</h2>
         <form action="/add_log" method="post">
-            <label for="log_type">Log Type:</label>
+            <label for="log_type"><b>Log Type:</b></label>
             <select name="log_type">
                 <option value="anomalies">Anomaly</option>
                 <option value="cobbles">Cobble</option>
             </select><br>
 
-            <label for="log_details">Log Details:</label>
-            <input type="text" name="log_details" required><br>
+            <label for="log_details"><b>Log Details:</b></label>
+            <textarea name="log_details" rows="6" cols="40" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter log details...'" placeholder="Enter log details" required></textarea><br>
 
-            <label for="datetime">Date-Time Period:</label>
+            <label for="datetime"><b>Date-Time Period:</b></label>
             <input type="datetime-local" name="datetime" required><br>
 
-            <label for="affected_region">Affected Region:</label>
+            <label for="affected_region"><b>Affected Region:</b></label>
             <select name="affected_region" id="regionSelect" onchange="updateSignals()">
                 <option value="" disabled selected>Select an affected region</option>
                 {% for region in signals_data.keys() %}
@@ -37,36 +37,28 @@
                 {% endfor %}
             </select><br>
             
-            <label for="signals">Signals Involved:</label>
+            <label for="signals"><b>Signals Involved:</b></label>
             <select name="signals" id="signalSelect">
                 <option value="" disabled selected>Select signals involved</option>
-                <!-- Signal options will be populated dynamically -->
             </select><br>
             
 
-            <label for="correctness_measures">Correctness Measures Taken:</label>
-            <input type="text" name="correctness_measures" required><br>
+            <label for="correctness_measures"><b>Correctness Measures Taken:</b></label>
+            <textarea name="correctness_measures" rows="4" cols="50" placeholder="Enter correctness measures" required></textarea><br>
 
             <input type="submit" value="Submit">
         </form>
     </div>
 
     <script>
-        // Set signalsData as a global variable
         var signalsData = {{ signals_data | tojson | safe | replace("'", "\'") | replace('"', '\"') | safe }};
 
         function updateSignals() {
             var regionSelect = document.getElementById('regionSelect');
             var signalSelect = document.getElementById('signalSelect');
             var selectedRegion = regionSelect.options[regionSelect.selectedIndex].value;
-
-            // Access signals data directly from the global variable
             var signals = signalsData[selectedRegion] || [];
-
-            // Clear previous options
             signalSelect.innerHTML = '';
-
-            // Populate new options
             signals.forEach(function(signal) {
                 var option = document.createElement('option');
                 option.value = signal;
@@ -74,8 +66,6 @@
                 signalSelect.add(option);
             });
         }
-
-        // Call updateSignals initially to populate the signals based on the default selected region
         updateSignals();
     </script>
        

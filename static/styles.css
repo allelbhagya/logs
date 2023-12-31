@@ -1,13 +1,13 @@
-
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f2f2f2;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #e1dfd5;
     margin: 0;
     padding: 0;
+    color: #26392a;
 }
 
 nav {
-    background-color: #001f3f;
+    background-color: #04393a; 
     color: #fff;
     padding: 10px;
     height: 100vh;
@@ -38,49 +38,54 @@ nav a {
 }
 
 nav a:hover {
-    background-color: #003366; 
+    background-color: #0b5f63; 
 }
 
 .container {
-    margin-right: 270px; 
+    margin-right: 270px;
 }
 
 h2 {
-    margin-left: 100px;
-    color: #333;
+    margin-left: 20px;
+    color: #04393a; 
 }
 
 form {
-    max-width: 400px;
+    max-width: 600px;
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;
-    border-radius: 8px;
+    border-radius: 2px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 label {
     display: block;
     margin-bottom: 8px;
+    color: #26392a; 
 }
 
+
 input, select {
+    margin-top: 10px;
+    margin-bottom: 10px;
     width: 100%;
     padding: 10px;
     margin-bottom: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;
 }
 
 input[type="submit"] {
-    background-color: #001f3f;
+    background-color: #04393a; 
     color: #fff;
     cursor: pointer;
 }
 
 input[type="submit"]:hover {
-    background-color: #003366; 
+
+    background-color: #0b5f63; 
 }
 
 table {
@@ -97,7 +102,7 @@ th, td {
 }
 
 th {
-    background-color: #001f3f;
+    background-color: #04393a;
     color: #fff;
 }
 
