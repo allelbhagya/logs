@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anomaly Logger</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Log</a></li>
+            <li><a href="/logs/anomalies">Anomaly Log</a></li>
+            <li><a href="/logs/cobbles">Cobble Log</a></li>
+        </ul>
+    </nav>
+    <div class="container">    <h2>Create a New Log</h2>
+    <form action="/add_log" method="post">
+        <label for="log_type">Log Type:</label>
+        <select name="log_type">
+            <option value="anomalies">Anomaly</option>
+            <option value="cobbles">Cobble</option>
+        </select><br>
+
+        <label for="log_details">Log Details:</label>
+        <input type="text" name="log_details" required><br>
+
+        <label for="datetime">Date-Time Period:</label>
+        <input type="datetime-local" name="datetime" required><br>
+
+        <label for="signals">Signals Involved:</label>
+        <input type="text" name="signals" required><br>
+
+        <label for="affected_region">Affected Region:</label>
+        <input type="text" name="affected_region" required><br>
+
+        <label for="correctness_measures">Correctness Measures Taken:</label>
+        <input type="text" name="correctness_measures" required><br>
+
+        <input type="submit" value="Submit">
+    </form></div>
+
+</body>
+</html>

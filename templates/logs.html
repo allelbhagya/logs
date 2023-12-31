@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if log_type == 'anomalies' %}Anomalies{% else %}Cobbles{% endif %} Log</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Log</a></li>
+            <li><a href="/logs/anomalies">Anomaly Log</a></li>
+            <li><a href="/logs/cobbles">Cobble Log</a></li>
+        </ul>
+    </nav>
+    <h2>{% if log_type == 'anomalies' %}Anomalies{% else %}Cobbles{% endif %} Log</h2>
+    <ul>
+        {% for log in logs %}
+            <li>{{ log.details }} - {{ log.datetime }} <a href="/edit/{{ log_type }}/{{ log.id }}">Edit</a> | <a href="/delete/{{ log_type }}/{{ log.id }}">Delete</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
